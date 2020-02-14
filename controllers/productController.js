@@ -76,7 +76,7 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-const getProductCategories = async (req, res) => {
+const getAllProductCategories = async (req, res) => {
   try {
     const productCategories = await Category.find({});
     return res.status(200).send({
@@ -141,7 +141,7 @@ module.exports = {
   getOneProduct,
   getAllProducts,
   getOneProductCategory,
-  getProductCategories,
+  getAllProductCategories,
   createProductCategory,
   createProduct
 };

@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth');
 const productController = require('../controllers/productController');
 
 router.get("", productController.getAllProducts);
-router.get("/product-categories", productController.getProductCategories);
+router.get("/product-categories", productController.getAllProductCategories);
 router.post("", productController.createProduct);
 router.post("/product-categories", productController.createProductCategory);
 router.get("/product-categories/:id", productController.getOneProductCategory);
