@@ -1,1 +1,7 @@
+node_modules/
+coverage/
+npm-debug.log
+test/*.log
+package-lock.json
+.nyc_output
 .env
