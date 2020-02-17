@@ -118,21 +118,32 @@ const createProductCategory = async (req, res) => {
 };
 
 const getOneProductCategory = async (req, res) => {
-  const { id } = req.params;
+  
+  const { id } = req.params
+
   try {
     const productCategory = await Category.findById({ _id: id }, (err, data) => {
-      if (err) console.log(err);
+      if (err)
+        console.log(err);
       return data;
     });
+
+    if (!productCategory) {
+      return res.status(400).send({
+        status: "fail",
+        message: "category does not exist"
+      });
+    }
+    
 
     res.status(200).send({
       status: "success",
       data: productCategory
     });
   } catch (err) {
-    res.status(500).send({
+    res.status(400).send({
       status: "fail",
-      message: "Error getting product category"
+      message: err.message
     });
   }
 };
