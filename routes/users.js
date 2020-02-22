@@ -11,26 +11,7 @@ router.get("/user", function(req, res, next) {
 });
 
 /* POST new user */
-router.post(
-  "/",
-  [
-    check("first_name", "First name is required")
-      .notEmpty()
-      .isLength({ min: 2 }),
-    check("last_name", "Last name is required")
-      .notEmpty()
-      .isLength({ min: 2 }),
-    check("email", "Enter a valid email address")
-      .notEmpty()
-      .isLength({ min: 6 })
-      .isEmail(),
-    check("password", "Password should be minimum of 8 characters")
-      .notEmpty()
-      .isLength({ min: 8 })
-  ],
-  validate,
-  userController.createUser
-);
+router.post("/", userController.createUser);
 router.get("/:id", auth, userController.getOneUser);
 router.get("/", auth, userController.getAllUsers);
 
@@ -42,3 +23,23 @@ module.exports = router;
 //     password: req.body.password,
 //   }).then(user => res.json(user))
 // })
+
+
+
+
+// [
+//     check("first_name", "First name is required")
+//       .notEmpty()
+//       .isLength({ min: 2 }),
+//     check("last_name", "Last name is required")
+//       .notEmpty()
+//       .isLength({ min: 2 }),
+//     check("email", "Enter a valid email address")
+//       .notEmpty()
+//       .isLength({ min: 6 })
+//       .isEmail(),
+//     check("password", "Password should be minimum of 8 characters")
+//       .notEmpty()
+//       .isLength({ min: 8 })
+//   ],
+//   validate,
