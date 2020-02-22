@@ -2,8 +2,8 @@ var express = require("express");
 var router = express.Router();
 const userController = require("../controllers/userController");
 const auth = require("../middlewares/auth");
-const { check } = require("express-validator");
-const { validate } = require("../validator.js");
+// const { check } = require("express-validator");
+// const { validate } = require("../validator.js");
 
 /* GET users listing. */
 router.get("/user", function(req, res, next) {
@@ -23,9 +23,6 @@ module.exports = router;
 //     password: req.body.password,
 //   }).then(user => res.json(user))
 // })
-
-
-
 
 // [
 //     check("first_name", "First name is required")
