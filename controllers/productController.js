@@ -1,31 +1,23 @@
-
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 
 const getOneProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Product.findById({ _id: id }, function (err, data) {
-      if (err) {
-        // throw err;
-        console.log(err);
-      }
-      return data;
-    });
+    const product = await Product.findById(id).populate("category");
 
     res.status(200).send({
       status: "success",
       message: "Product retrieved successfully!",
-      data: product  
+      data: product
     });
-
   } catch (err) {
     res.status(400).send({
       status: "fail",
       message: err.message
     });
   }
-}
+};
 
 const createProduct = async (req, res) => {
   try {
@@ -44,21 +36,18 @@ const createProduct = async (req, res) => {
 
     await product.save();
 
-    
     return res.status(200).send({
       status: "success",
       message: "product created successfully",
       product: product
-    })
-
+    });
   } catch (err) {
     return res.status(500).send({
       status: "fail",
       message: err.message
-    })
+    });
   }
-  
-}
+};
 
 const getAllProducts = async (req, res) => {
   try {
@@ -88,10 +77,9 @@ const getAllProductCategories = async (req, res) => {
     return res.status(500).send({
       status: "fail",
       message: err.message
-    }); 
+    });
   }
 };
-
 
 const createProductCategory = async (req, res) => {
   try {
@@ -118,15 +106,16 @@ const createProductCategory = async (req, res) => {
 };
 
 const getOneProductCategory = async (req, res) => {
-  
-  const { id } = req.params
+  const { id } = req.params;
 
   try {
-    const productCategory = await Category.findById({ _id: id }, (err, data) => {
-      if (err)
-        console.log(err);
-      return data;
-    });
+    const productCategory = await Category.findById(
+      { _id: id },
+      (err, data) => {
+        if (err) console.log(err);
+        return data;
+      }
+    );
 
     if (!productCategory) {
       return res.status(400).send({
@@ -134,7 +123,6 @@ const getOneProductCategory = async (req, res) => {
         message: "category does not exist"
       });
     }
-    
 
     res.status(200).send({
       status: "success",
@@ -156,4 +144,3 @@ module.exports = {
   createProductCategory,
   createProduct
 };
-

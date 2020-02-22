@@ -1,17 +1,19 @@
-const jwt = require('jsonwebtoken');
-const { config } = require('dotenv');
+const jwt = require("jsonwebtoken");
+const { config } = require("dotenv");
 
 config();
 
-module.exports = function (req, res, next) {
+module.exports = function(req, res, next) {
   // Get token from header
-  const token = req.header('x-auth');
+  let token = req.header("authorization");
+
+  token = token.replace("Bearer ", "");
 
   //check if not token
   if (!token) {
     return res.status(401).send({
-      status: 'fail',
-      message: 'No token, authorization denied'
+      status: "fail",
+      message: "No token, authorization denied"
     });
   }
 
@@ -20,22 +22,20 @@ module.exports = function (req, res, next) {
     const decoded = jwt.verify(token, process.env.jwtSecret);
 
     //log headers
-    console.log(req.headers);
+    console.log("request headers", req.headers);
 
     //log authenticated user
-    console.log(req.user);
+    // console.log(req.user);
 
-    console.log("i got here");
+    // console.log("i got here");
 
     req.user = decoded.user;
     next();
-
   } catch (err) {
     console.log(err);
     res.status(401).send({
-      status: 'fail',
-      message: 'Token is not valid'
-    })
+      status: "fail",
+      message: "Token is not valid"
+    });
   }
-
 };

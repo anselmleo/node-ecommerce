@@ -9,11 +9,11 @@ const ProductSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true,
+    required: true
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'categories'
+    ref: "category"
   },
   createdAt: {
     type: Date,
