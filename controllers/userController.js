@@ -9,6 +9,8 @@ const User = require("../models/User");
 const createUser = async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
+  console.log(req.body);
+
   try {
     //Ensure user doesn't already exist
     let user = await User.findOne({ email });
@@ -101,27 +103,27 @@ const getOneUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  if (req.user.role !== 'admin') {
+  if (req.user.role !== "admin") {
     return res.status(403).send({
-      status: 'fail',
-      message: 'Unauthorized request'                                 
+      status: "fail",
+      message: "Unauthorized request"
     });
   }
 
   try {
-    const users = await User.find({}).select('-password');
+    const users = await User.find({}).select("-password");
     res.status(200).send({
-      status: 'success',
+      status: "success",
       data: users
     });
   } catch (err) {
     console.error(err.message);
     res.status(500).send({
-      status: 'fail',
-      message:err.message
-    })
+      status: "fail",
+      message: err.message
+    });
   }
-}
+};
 
 module.exports = {
   createUser,

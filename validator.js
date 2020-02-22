@@ -1,29 +1,31 @@
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 
-const userValidationRules = () => {
-  return [
-    body('firstname').isString().isLength({min: 2}),
-    body('lastname').isString().isLength({min: 2}),
-    body('email').isEmail(),
-    body('password').isLength({ min: 4 })
-  ]
-}
+// const userValidationRules = (req, res, next) => {
+//   console.log("got here");
+//   return [
+//     body("firstname")
+//       .isString()
+//       .isLength({ min: 2 }),
+//     body("lastname")
+//       .isString()
+//       .isLength({ min: 2 }),
+//     body("email").isEmail(),
+//     body("password").isLength({ min: 4 })
+//   ];
+// };
 
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next()
+    return res.status(422).send({
+      status: "fail",
+      errors: errors.array()
+    });
   }
 
-  const extractedErrors = [];
-  errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }));
-
-  return res.status(422).json({
-    errors: extractedErrors,
-  });
-}
+  next();
+};
 
 module.exports = {
-  validate,
-  userValidationRules
-}
+  validate
+};
